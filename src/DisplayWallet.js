@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 function TokenList(props) {
     const listItems = props.tokens.map((token) =>
-        <li key={token.symbol}>{token.name}: <strong>{token.amount} {token.symbol}</strong></li>
+        <li key={token.symbol}>{token.name}: <strong>{token.amount} {token.symbol}'s</strong></li>
     );
     return (
         <ul>{listItems}</ul>
