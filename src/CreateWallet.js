@@ -12,7 +12,6 @@ class CreateWallet extends Component {
 
     handleSubmit(event){
         let wallet = new izx.Wallet();
-        console.log('handleSubmit');
         try{
             wallet.generate_new();
             this.props.onWalletCreate(wallet);
