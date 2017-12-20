@@ -1,0 +1,14 @@
+.transfer {
+
+    margin: 20px;
+
+}
+
+.transfer input {
+    margin-right: 20px;
+    min-width: 300px;
+}
+
+.transfer a {
+    cursor: pointer;
+}

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import TransferOldTokens from './TransferOldTokens';
+
 function TokenList(props) {
     const listItems = props.tokens.map((token) =>
         <li key={token.symbol}>{token.name}: <strong>{token.amount} {token.symbol}'s</strong></li>
@@ -10,7 +12,6 @@ function TokenList(props) {
 };
 
 class DisplayWallet extends Component {
-
 
     render() {
         var wallet = this.props.wallet;
@@ -23,10 +24,10 @@ class DisplayWallet extends Component {
                     <h4>Token balances</h4>
                     <TokenList tokens={wallet.token_balances()} />
                 </div>
+                <TransferOldTokens wallet={wallet}/>
             </div>
         );
     }
-
 }
 
 export default DisplayWallet;
