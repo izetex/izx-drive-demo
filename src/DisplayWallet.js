@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
+import Async from 'react-promise';
 
 import TransferOldTokens from './TransferOldTokens';
 
+const TokenAmount = (props) => <Async promise={props.amount} then={(val) => <span>{val}</span>}/>
+
 function TokenList(props) {
     const listItems = props.tokens.map((token) =>
-        <li key={token.symbol}>{token.name}: <strong>{token.amount} {token.symbol}'s</strong></li>
+        <li key={token.symbol}>{token.name}: <strong><TokenAmount amount={token.amount} /> {token.symbol}'s</strong></li>
     );
     return (
         <ul>{listItems}</ul>
     );
 };
 
-class DisplayWallet extends Component {
 
+
+
+class DisplayWallet extends Component {
     render() {
         var wallet = this.props.wallet;
         return (
