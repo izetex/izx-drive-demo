@@ -15,7 +15,14 @@ class TransferOldTokens extends Component {
     }
 
     handleSubmit(event){
-        izx.IzxMvpGame.transfer_old_tokens( this.props.wallet, this.state.user,  this.state.dev );
+        var c = this;
+        izx.IzxMvpGame.transfer_old_tokens( this.props.wallet,
+                                            this.state.user,
+                                            this.state.dev ).then(function (htmlString){
+                console.log(htmlString);
+                c.setState({opened: false});
+            }
+        );
         event.preventDefault();
     }
 
