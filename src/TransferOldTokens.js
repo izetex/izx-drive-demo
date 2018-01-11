@@ -18,11 +18,12 @@ class TransferOldTokens extends Component {
         var c = this;
         izx.IzxMvpGame.transfer_old_tokens( this.props.wallet,
                                             this.state.user,
-                                            this.state.dev ).then(function (htmlString){
-                console.log(htmlString);
+                                            this.state.dev ).then(function (result){
+                console.log(result);
                 c.setState({opened: false});
-            }
-        );
+            }).catch( function(err){
+                console.log("Error: "+err);
+        });
         event.preventDefault();
     }
 
