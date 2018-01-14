@@ -3,6 +3,7 @@ import Menu from './Menu';
 import DisplayWallet from './DisplayWallet';
 import ImportWallet from './ImportWallet';
 import CreateWallet from './CreateWallet';
+import ConnectWallet from './ConnectWallet';
 
 const izx = require('izx-drive');
 
@@ -23,6 +24,7 @@ class App extends Component {
             <div id="app">
                 <Menu value={this.state.wallet}/>
                 <div className="col-sm-8 col-sm-offset-2">
+                    <ConnectWallet onWalletConnect={this.handleWallet} />
                     <ImportWallet onWalletImport={this.handleWallet} />
                     <CreateWallet onWalletCreate={this.handleWallet} />
                 </div>

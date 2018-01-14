@@ -11,14 +11,13 @@ class TransferOldTokens extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.state = { opened: false, user: '', dev: '' };
+        this.state = { opened: false, hash: '' };
     }
 
     handleSubmit(event){
         var c = this;
         izx.IzxMvpGame.transfer_old_tokens( this.props.wallet,
-                                            this.state.user,
-                                            this.state.dev ).then(function (result){
+                                            this.state.hash).then(function (result){
                 console.log(result);
                 c.setState({opened: false});
             }).catch( function(err){
@@ -41,23 +40,20 @@ class TransferOldTokens extends Component {
     }
 
     render() {
+
+        if(this.props.wallet)
+
         return this.state.opened ? (
             <div className="transfer">
                     <form className="form-inline" onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <input type="text" className="form-control"
-                                      placeholder="userID"
-                                      name="user"
-                                      value={this.state.user}
+                                      placeholder="hash from app"
+                                      name="hash"
+                                      value={this.state.hash}
                                       onChange={this.handleChange} />
                         </div>
-                        <div className="form-group">
-                            <input type="text" className="form-control"
-                                   placeholder="dev"
-                                   name="dev"
-                                   value={this.state.userid}
-                                   onChange={this.handleChange} />
-                        </div>
+
                         <button type="submit" className="btn btn-default">Transfer</button>
                     </form>
             </div>

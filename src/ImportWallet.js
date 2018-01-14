@@ -34,7 +34,6 @@ class ImportWallet extends Component {
                     <h3 className="panel-title">Import wallet key</h3>
                 </div>
                 <div className="panel-body">
-                    <h3>Use private key or mnemonics to import</h3>
                     {this.state.error && <p className="alert alert-warning">{this.state.error}</p> }
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
