@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-const izx = require('izx-drive');
-
 class ConnectWallet extends Component {
 
     constructor(props) {
@@ -14,7 +12,7 @@ class ConnectWallet extends Component {
     }
 
     handleSubmit(event){
-        let wallet = new izx.Wallet();
+        let wallet = this.props.wallet;
         try{
             wallet.connect_web3(this.state.web3);
             this.props.onWalletConnect(wallet);

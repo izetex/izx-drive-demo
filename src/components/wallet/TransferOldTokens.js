@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import style from './TransferOldTokens.css';
+import './TransferOldTokens.css';
 
 const izx = require('izx-drive');
 
@@ -18,11 +18,9 @@ class TransferOldTokens extends Component {
         var c = this;
         izx.IzxMvpGame.transfer_old_tokens( this.props.wallet,
                                             this.state.hash).then(function (result){
-                console.log(result);
                 c.setState({opened: false});
             }).catch( function(err){
-                console.log("Error: "+err);
-        });
+            });
         event.preventDefault();
     }
 
@@ -32,7 +30,6 @@ class TransferOldTokens extends Component {
 
     handleChange(event) {
         const target = event.target;
-        const name = target.name;
         this.setState({
             [target.name]: target.value
         });

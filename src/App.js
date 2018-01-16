@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import Menu from './Menu';
-import DisplayWallet from './DisplayWallet';
-import ImportWallet from './ImportWallet';
-import CreateWallet from './CreateWallet';
-import ConnectWallet from './ConnectWallet';
+import Menu from './components/common/Menu';
+import LogTable from './components/common/LogTable';
+import DisplayWallet from './components/wallet/DisplayWallet';
+import ImportWallet from './components/wallet/ImportWallet';
+import CreateWallet from './components/wallet/CreateWallet';
+import ConnectWallet from './components/wallet/ConnectWallet';
 
 const izx = require('izx-drive');
 
@@ -11,8 +12,18 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { wallet: new izx.Wallet() };
+        var wallet = new izx.Wallet();
+        this.state = { wallet: wallet, events: [] };
         this.handleWallet = this.handleWallet.bind(this);
+
+        let logger = new izx.Logger(wallet);
+        var self = this;
+        logger.subscribe(function(record) {
+            var events = self.state.events;
+            events.push({id: events.length+1, content: record});
+            self.setState({events: events});
+        });
+
     }
 
     handleWallet (wallet){
@@ -20,13 +31,14 @@ class App extends Component {
     }
 
     import_wallet (){
+        var wallet = this.state.wallet;
         return (
             <div id="app">
-                <Menu value={this.state.wallet}/>
+                <Menu value={wallet}/>
                 <div className="col-sm-8 col-sm-offset-2">
-                    <ConnectWallet onWalletConnect={this.handleWallet} />
-                    <ImportWallet onWalletImport={this.handleWallet} />
-                    <CreateWallet onWalletCreate={this.handleWallet} />
+                    <ConnectWallet wallet={wallet} onWalletConnect={this.handleWallet} />
+                    <ImportWallet wallet={wallet} onWalletImport={this.handleWallet} />
+                    <CreateWallet wallet={wallet} onWalletCreate={this.handleWallet} />
                 </div>
             </div>
         );
@@ -36,9 +48,13 @@ class App extends Component {
         return (
             <div id="app">
                 <Menu value={this.state.wallet}/>
-                <div className="col-sm-8 col-sm-offset-2">
+                <div className="container">
                     <DisplayWallet wallet={this.state.wallet}/>
                 </div>
+
+                <footer className="footer">
+                    <LogTable eventList={this.state.events}/>
+                </footer>
             </div>
         );
     }
@@ -46,7 +62,7 @@ class App extends Component {
     render() {
 
         var wallet = this.state.wallet;
-        if(wallet.initialized()){
+        if(wallet.connection){
             return this.display_wallet(wallet);
         }else{
             return this.import_wallet();

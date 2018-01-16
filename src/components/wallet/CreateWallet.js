@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-const izx = require('izx-drive');
-
 class CreateWallet extends Component {
 
     constructor(props) {
@@ -11,7 +9,7 @@ class CreateWallet extends Component {
     }
 
     handleSubmit(event){
-        let wallet = new izx.Wallet();
+        let wallet = this.props.wallet;
         try{
             wallet.generate_new();
             this.props.onWalletCreate(wallet);

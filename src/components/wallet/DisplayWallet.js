@@ -15,9 +15,17 @@ function TokenList(props) {
 };
 
 
-
-
 class DisplayWallet extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { balances: [] };
+    }
+
+    componentDidMount() {
+        this.setState({balances: this.props.wallet.token_balances()});
+    }
+
     render() {
         var wallet = this.props.wallet;
         return (
@@ -27,7 +35,7 @@ class DisplayWallet extends Component {
                 </div>
                 <div className="panel-body">
                     <h4>Token balances</h4>
-                    <TokenList tokens={wallet.token_balances()} />
+                    <TokenList tokens={this.state.balances}/>
                 </div>
                 <TransferOldTokens wallet={wallet}/>
             </div>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-const izx = require('izx-drive');
-
 class ImportWallet extends Component {
 
     constructor(props) {
@@ -12,8 +10,7 @@ class ImportWallet extends Component {
     }
 
     handleSubmit(event){
-        let wallet = new izx.Wallet();
-
+        let wallet = this.props.wallet;
         try{
             wallet.import(this.state.mnemonics);
             this.props.onWalletImport(wallet);

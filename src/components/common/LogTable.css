@@ -1,0 +1,27 @@
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    /* height: 120px;
+    line-height: 120px; */
+    background-color: #f5f5f5;
+}
+
+.footer table td {
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.footer .table td {
+    padding: 2px;
+    font-size: 12px;
+}
+
+.footer .table th {
+    padding: 2px;
+    font-size: 12px;
+}

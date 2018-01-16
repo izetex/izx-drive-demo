@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './assets/izx_logo_24x24.png';
+import logo from '../../assets/izx_logo_24x24.png';
 
 class Menu extends Component {
     render() {
