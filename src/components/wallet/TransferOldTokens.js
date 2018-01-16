@@ -9,6 +9,7 @@ class TransferOldTokens extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
         this.state = { opened: false, hash: '' };
     }
 
@@ -20,6 +21,10 @@ class TransferOldTokens extends Component {
         }).catch( function(err){
         });
         event.preventDefault();
+    }
+
+    handleClose(event) {
+        this.setState({opened: false});
     }
 
     handleClick(event) {
@@ -49,8 +54,10 @@ class TransferOldTokens extends Component {
                                       onChange={this.handleChange} />
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Transfer</button>
+                        <button type="submit" className="btn btn-primary">Transfer</button>&nbsp;
+                        <a className="btn btn-default" onClick={this.handleClose}>Cancel</a>
                     </form>
+
             </div>
         ) : (
             <div className="transfer">
