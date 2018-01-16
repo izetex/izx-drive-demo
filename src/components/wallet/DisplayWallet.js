@@ -28,6 +28,7 @@ class DisplayWallet extends Component {
 
     render() {
         var wallet = this.props.wallet;
+        var mvp_game = this.props.mvp_game;
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
@@ -37,7 +38,7 @@ class DisplayWallet extends Component {
                     <h4>Token balances</h4>
                     <TokenList tokens={this.state.balances}/>
                 </div>
-                <TransferOldTokens wallet={wallet}/>
+                <TransferOldTokens mvp_game={mvp_game} wallet={wallet}/>
             </div>
         );
     }

@@ -12,18 +12,22 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        var wallet = new izx.Wallet();
-        this.state = { wallet: wallet, events: [] };
-        this.handleWallet = this.handleWallet.bind(this);
 
-        let logger = new izx.Logger(wallet);
         var self = this;
-        logger.subscribe(function(record) {
-            var events = self.state.events;
-            events.push({id: events.length+1, content: record});
-            self.setState({events: events});
+
+        var wallet = new izx.Wallet();
+        var mvp_game = izx.IzxMvpGame;
+
+        [wallet, mvp_game].map(function(e){
+            new izx.Logger(e).subscribe(function(record) {
+                var events = self.state.events;
+                events.unshift({id: events.length+1, content: record});
+                self.setState({events: events});
+            });
         });
 
+        this.state = { wallet: wallet, mvp_game: mvp_game, events: [] };
+        this.handleWallet = this.handleWallet.bind(this);
     }
 
     handleWallet (wallet){
@@ -49,7 +53,7 @@ class App extends Component {
             <div id="app">
                 <Menu value={this.state.wallet}/>
                 <div className="container">
-                    <DisplayWallet wallet={this.state.wallet}/>
+                    <DisplayWallet mvp_game={this.state.mvp_game} wallet={this.state.wallet}/>
                 </div>
 
                 <footer className="footer">

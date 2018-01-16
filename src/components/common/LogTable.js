@@ -7,13 +7,13 @@ const util = require('util');
 
 function EventList(props) {
     const listItems = props.eventList.map((event) =>
-        <tr key={event.id} className={event.content.success ? (event.content.async ? 'bg-info' : 'bg-success') : 'bg-warning'}>
+        <tr key={event.id} className={event.content.success ? (event.content.async ? 'bg-info' : 'bg-success') : 'bg-danger'}>
             <td>{event.id}</td>
             <td>{new Date(event.content.start_at).toLocaleTimeString()}</td>
             <td>{event.content.duration} ms {event.content.async ? 'async' : ''}</td>
             <td>{event.content.object}.{event.content.method}</td>
             <td>{util.inspect(event.content.args)}</td>
-            <td>{util.inspect(event.content.result)}</td>
+            <td>{util.inspect(event.content.exception || event.content.result)}</td>
         </tr>
     );
     return listItems;

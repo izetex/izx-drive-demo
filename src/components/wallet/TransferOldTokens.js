@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import './TransferOldTokens.css';
 
-const izx = require('izx-drive');
-
 class TransferOldTokens extends Component {
 
     constructor(props) {
@@ -16,11 +14,11 @@ class TransferOldTokens extends Component {
 
     handleSubmit(event){
         var c = this;
-        izx.IzxMvpGame.transfer_old_tokens( this.props.wallet,
+        this.props.mvp_game.transfer_old_tokens( this.props.wallet,
                                             this.state.hash).then(function (result){
-                c.setState({opened: false});
-            }).catch( function(err){
-            });
+           c.setState({opened: false});
+        }).catch( function(err){
+        });
         event.preventDefault();
     }
 
@@ -51,7 +49,7 @@ class TransferOldTokens extends Component {
                                       onChange={this.handleChange} />
                         </div>
 
-                        <button type="submit" className="btn btn-default">Transfer</button>
+                        <button type="submit" className="btn btn-primary">Transfer</button>
                     </form>
             </div>
         ) : (
