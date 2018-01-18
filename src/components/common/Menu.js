@@ -29,7 +29,9 @@ class Menu extends Component {
                 this.props.onWalletCall(wallet);
                 break;
             case 'save':
-                WalletStorage.saveToStore(wallet,  'password');
+                try{
+                    WalletStorage.saveToStore(wallet,  'password');
+                }catch(e){}
                 this.props.onWalletCall(wallet);
                 break;
         }
