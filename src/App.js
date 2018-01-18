@@ -5,6 +5,7 @@ import DisplayWallet from './components/wallet/DisplayWallet';
 import ImportWallet from './components/wallet/ImportWallet';
 import CreateWallet from './components/wallet/CreateWallet';
 import ConnectWallet from './components/wallet/ConnectWallet';
+import LoadWallet from './components/wallet/LoadWallet';
 
 const izx = require('izx-drive');
 
@@ -38,8 +39,9 @@ class App extends Component {
         var wallet = this.state.wallet;
         return (
             <div id="app">
-                <Menu value={wallet}/>
+                <Menu wallet={wallet} onWalletCall={this.handleWallet}/>
                 <div className="col-sm-8 col-sm-offset-2">
+                    <LoadWallet wallet={wallet} onWalletLoad={this.handleWallet} />
                     <ConnectWallet wallet={wallet} onWalletConnect={this.handleWallet} />
                     <ImportWallet wallet={wallet} onWalletImport={this.handleWallet} />
                     <CreateWallet wallet={wallet} onWalletCreate={this.handleWallet} />
@@ -51,9 +53,9 @@ class App extends Component {
     display_wallet(wallet){
         return (
             <div id="app">
-                <Menu value={this.state.wallet}/>
+                <Menu wallet={wallet} onWalletCall={this.handleWallet}/>
                 <div className="container">
-                    <DisplayWallet mvp_game={this.state.mvp_game} wallet={this.state.wallet}/>
+                    <DisplayWallet mvp_game={this.state.mvp_game} wallet={wallet}/>
                 </div>
 
                 <footer className="footer">
@@ -64,7 +66,6 @@ class App extends Component {
     }
 
     render() {
-
         var wallet = this.state.wallet;
         if(wallet.connection){
             return this.display_wallet(wallet);

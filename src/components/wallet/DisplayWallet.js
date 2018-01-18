@@ -39,11 +39,18 @@ class DisplayWallet extends Component {
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title">Your wallet address {wallet.address}</h3>
+                    <h3 className="panel-title">Your wallet</h3>
                 </div>
                 <div className="panel-body">
+                    <p className="hidden-xs">
+                        Address: <strong>{wallet.address}</strong>&nbsp;&nbsp;
+                        <a href={'http://ropsten.etherscan.io/address/'+wallet.address} target="_blank" className={style.smallLink}>
+                            <span className="glyphicon glyphicon-share"></span>Ropsten</a>&nbsp;&nbsp;
+                        <a href={'http://etherscan.io/address/'+wallet.address} target="_blank" className={style.smallLink}>
+                            <span className="glyphicon glyphicon-share"></span>Foundation</a>
+                    </p>
                     <h4>Token balances
-                        <a className={style.refreshLink} onClick={this.handleRefresh}><span className="glyphicon glyphicon-refresh"></span> refresh</a>
+                        <a className={style.smallLink} onClick={this.handleRefresh}><span className="glyphicon glyphicon-refresh"></span> refresh</a>
                     </h4>
                     <TokenList tokens={this.state.balances}/>
                 </div>

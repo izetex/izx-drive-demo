@@ -1,4 +1,4 @@
-:local(.refreshLink) {
+:local(.smallLink) {
     padding-left: 5px;
     font-size: 12px;
     text-decoration: underline;

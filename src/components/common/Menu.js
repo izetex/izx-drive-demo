@@ -1,39 +1,63 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import logo from '../../assets/izx_logo_24x24.png';
+import WalletStorage from '../../util/WalletStorage';
+
+var Nav = require('react-bootstrap/lib/Nav');
+var Navbar = require('react-bootstrap/lib/Navbar');
+var MenuItem = require('react-bootstrap/lib/MenuItem');
+var NavDropdown = require('react-bootstrap/lib/NavDropdown');
+
+function BrandHeader(){
+    return <Navbar.Header>
+        <Navbar.Brand>
+            <img src={logo} className="App-logo" alt="logo"/>
+        </Navbar.Brand>
+        <Navbar.Brand>IZX Drive Demo
+        </Navbar.Brand>
+        <Navbar.Toggle />
+    </Navbar.Header>;
+}
 
 class Menu extends Component {
+
+
+    handleSelect(eventKey) {
+        var wallet = this.props.wallet;
+        switch(eventKey){
+            case 'lock':
+                wallet.lock();
+                this.props.onWalletCall(wallet);
+                break;
+            case 'save':
+                WalletStorage.saveToStore(wallet,  'password');
+                this.props.onWalletCall(wallet);
+                break;
+        }
+    }
+
     render() {
-        return (
-            <nav className="navbar navbar-default">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span className="sr-only">Menu</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                        <div className="navbar-brand">
-                            <img src={logo} className="App-logo" alt="logo" />
-                        </div>
-                        <div className="navbar-brand">
-                            IZX Drive
-                        </div>
-                    </div>
-
-                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-
-                        <ul className="nav navbar-nav navbar-right">
-                            <li><a>Wallet {this.props.value.address}</a></li>
-                        </ul>
-
-
-                    </div>
-
-                </div>
-            </nav>
-        );
+        if(this.props.wallet.address){
+            return (
+                <Navbar collapseOnSelect>
+                    <BrandHeader />
+                    <Navbar.Collapse>
+                        <Nav pullRight activeKey="1" onSelect={k => this.handleSelect(k)}>
+                            <NavDropdown eventKey="4" title="Wallet" id="nav-dropdown">
+                                <MenuItem eventKey="save">Save wallet</MenuItem>
+                                <MenuItem divider/>
+                                <MenuItem eventKey="lock">Lock wallet</MenuItem>
+                            </NavDropdown>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            );
+        }else{
+            return (
+                <Navbar collapseOnSelect>
+                    <BrandHeader />
+                </Navbar>
+            );
+        }
     }
 }
 
