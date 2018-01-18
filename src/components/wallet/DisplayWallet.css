@@ -1,0 +1,7 @@
+:local(.refreshLink) {
+    padding-left: 5px;
+    font-size: 12px;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    cursor: pointer;
+}
