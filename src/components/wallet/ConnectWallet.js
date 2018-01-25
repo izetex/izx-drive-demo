@@ -6,7 +6,6 @@ class ConnectWallet extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            error: null,
             web3: window.web3
         };
     }
@@ -17,7 +16,7 @@ class ConnectWallet extends Component {
             wallet.connect_web3(this.state.web3);
             this.props.onWalletConnect(wallet);
         }catch(err){
-            this.setState({error: "Error connecting wallet, "+err});
+            this.props.onAlert({caption: "Error connecting wallet", error: err});
         }
         event.preventDefault();
     }
@@ -36,7 +35,6 @@ class ConnectWallet extends Component {
                 </div>
                 <div className="panel-body">
                     <h5>{this.state.web3.eth.accounts[0]}</h5>
-                    {this.state.error && <p className="alert alert-warning">{this.state.error}</p> }
                     <form onSubmit={this.handleSubmit}>
                         <button type="submit" className="btn btn-success">Connect</button>
                     </form>

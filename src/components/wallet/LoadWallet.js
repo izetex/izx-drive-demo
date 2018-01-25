@@ -6,9 +6,7 @@ class LoadWallet extends Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {
-            error: null
-        };
+        this.state = {};
     }
 
     componentDidMount() {
@@ -21,7 +19,8 @@ class LoadWallet extends Component {
             WalletStorage.loadFromStore(wallet);
             this.props.onWalletLoad(wallet);
         }catch(err){
-            this.setState({error: "Error loading wallet, "+err});
+            this.props.onAlert({caption: "Error loading wallet",
+                error: err});
         }
         event.preventDefault();
     }
@@ -36,7 +35,6 @@ class LoadWallet extends Component {
                     <h3 className="panel-title">Load saved wallet</h3>
                 </div>
                 <div className="panel-body">
-                    {this.state.error && <p className="alert alert-warning">{this.state.error}</p> }
                     <form onSubmit={this.handleSubmit}>
                         <button type="submit" className="btn btn-success">Load</button>
                     </form>

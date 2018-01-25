@@ -56,7 +56,7 @@ class DisplayWallet extends Component {
                     </h4>
                     <TokenList tokens={this.state.balances}/>
                 </div>
-                <TransferOldTokens mvp_game={mvp_game} wallet={wallet}/>
+                <TransferOldTokens mvp_game={mvp_game} wallet={wallet} onAlert={this.props.onAlert}/>
             </div>
         );
     }

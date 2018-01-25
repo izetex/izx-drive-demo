@@ -6,7 +6,7 @@ class ImportWallet extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.state = {mnemonics: '', error: null};
+        this.state = {mnemonics: ''};
     }
 
     handleSubmit(event){
@@ -15,7 +15,8 @@ class ImportWallet extends Component {
             wallet.import(this.state.mnemonics);
             this.props.onWalletImport(wallet);
         }catch(err){
-            this.setState({error: "Enter valid private key or mnemonics, "+err});
+            this.props.onAlert({caption: "Fail to import wallet",
+                error: "Enter valid private key or mnemonics, "+err});
         }
         event.preventDefault();
     }
@@ -31,7 +32,6 @@ class ImportWallet extends Component {
                     <h3 className="panel-title">Import wallet key</h3>
                 </div>
                 <div className="panel-body">
-                    {this.state.error && <p className="alert alert-warning">{this.state.error}</p> }
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <textarea className="form-control"

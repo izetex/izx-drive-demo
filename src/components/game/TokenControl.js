@@ -11,7 +11,7 @@ class TokenControl extends Component {
                 Address: <strong>{game.address}</strong>&nbsp;&nbsp;
                 Token: <strong>{game.token.name}</strong>
             </p>
-            <ApprovedTokens game={game}/>
+            <ApprovedTokens game={game} onAlert={this.props.onAlert}/>
         </div>
     }
 

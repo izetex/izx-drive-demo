@@ -14,11 +14,13 @@ class TransferOldTokens extends Component {
     }
 
     handleSubmit(event){
-        var c = this;
+        var self = this;
         this.props.mvp_game.transfer_old_tokens( this.props.wallet,
                                             this.state.hash).then(function (result){
-           c.setState({opened: false});
+           self.setState({opened: false});
+           self.props.onAlert({caption: "Tokens are transfered", message: String(result)});
         }).catch( function(err){
+           self.props.onAlert({caption: "Error transfering tokens", error: err});
         });
         event.preventDefault();
     }

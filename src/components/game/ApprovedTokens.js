@@ -21,8 +21,11 @@ class ApprovedTokens extends Component {
 
         token.approve( game.address, this.state.amount ).then(function (result){
             self.setState({opened: false});
+            self.props.onAlert({caption: "Approved tokens for "+game.name,
+                transaction: result});
         }).catch( function(err){
-            console.log(err);
+            self.props.onAlert({caption: "Fail to approve tokens for "+game.name,
+                error: String(err)});
         });
 
         event.preventDefault();

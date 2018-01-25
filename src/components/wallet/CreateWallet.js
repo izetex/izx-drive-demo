@@ -5,7 +5,6 @@ class CreateWallet extends Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {error: null};
     }
 
     handleSubmit(event){
@@ -14,8 +13,7 @@ class CreateWallet extends Component {
             wallet.generate_new();
             this.props.onWalletCreate(wallet);
         }catch(err){
-            this.setState({error: "Error creating wallet, "+err});
-            console.log(err.stack);
+            this.props.onAlert({caption: "Error creating wallet", error: err});
         }
         event.preventDefault();
     }
@@ -27,7 +25,6 @@ class CreateWallet extends Component {
                     <h3 className="panel-title">Create new wallet</h3>
                 </div>
                 <div className="panel-body">
-                    {this.state.error && <p className="alert alert-warning">{this.state.error}</p> }
                     <form onSubmit={this.handleSubmit}>
                         <button type="submit" className="btn btn-success">Create</button>
                     </form>

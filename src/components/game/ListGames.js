@@ -30,8 +30,8 @@ class ListGames extends Component {
                         <h3 className="panel-title">{game.name}</h3>
                     </div>
                     <div className="panel-body">
-                        <TokenControl game={game}/>
-                        <RenderGame game={game}/>
+                        <TokenControl game={game} onAlert={this.props.onAlert}/>
+                        <RenderGame game={game} onAlert={this.props.onAlert}/>
                     </div>
                 </div>
         );

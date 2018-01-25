@@ -7,6 +7,7 @@ import CreateWallet from './components/wallet/CreateWallet';
 import ConnectWallet from './components/wallet/ConnectWallet';
 import LoadWallet from './components/wallet/LoadWallet';
 import ListGames from './components/game/ListGames';
+import AlertDismissable from './components/common/AlertDismissable';
 
 const izx = require('izx-drive');
 
@@ -28,21 +29,32 @@ class App extends Component {
             });
         });
 
-        this.state = { wallet: wallet, mvp_game: mvp_game, events: [] };
+        this.state = { wallet: wallet, mvp_game: mvp_game, events: [], show_alert: false };
         this.handleWallet = this.handleWallet.bind(this);
+        this.handleAlert = this.handleAlert.bind(this);
+        this.hideAlert = this.hideAlert.bind(this);
     }
 
     handleWallet (wallet){
         this.setState({wallet: wallet});
         var self = this;
-        wallet.tokens().concat(wallet.games()).map(function(e){
-            new izx.Logger(e).subscribe(function(record) {
-                var events = self.state.events;
-                events.unshift({id: events.length+1, content: record});
-                self.setState({events: events});
+        if(wallet.connection){
+            wallet.tokens().concat(wallet.games()).map(function(e){
+                new izx.Logger(e).subscribe(function(record) {
+                    var events = self.state.events;
+                    events.unshift({id: events.length+1, content: record});
+                    self.setState({events: events});
+                });
             });
-        });
+        }
+    }
 
+    handleAlert ( alert ){
+        this.setState({ show_alert: true, alert: alert });
+    }
+
+    hideAlert() {
+        this.setState({ show_alert: false });
     }
 
     import_wallet (){
@@ -50,11 +62,13 @@ class App extends Component {
         return (
             <div id="app">
                 <Menu wallet={wallet} onWalletCall={this.handleWallet}/>
+
                 <div className="col-sm-8 col-sm-offset-2">
-                    <LoadWallet wallet={wallet} onWalletLoad={this.handleWallet} />
-                    <ConnectWallet wallet={wallet} onWalletConnect={this.handleWallet} />
-                    <ImportWallet wallet={wallet} onWalletImport={this.handleWallet} />
-                    <CreateWallet wallet={wallet} onWalletCreate={this.handleWallet} />
+                    <AlertDismissable show={this.state.show_alert} alert={this.state.alert} hide={this.hideAlert}/>
+                    <LoadWallet wallet={wallet} onWalletLoad={this.handleWallet} onAlert={this.handleAlert}/>
+                    <ConnectWallet wallet={wallet} onWalletConnect={this.handleWallet} onAlert={this.handleAlert}/>
+                    <ImportWallet wallet={wallet} onWalletImport={this.handleWallet} onAlert={this.handleAlert}/>
+                    <CreateWallet wallet={wallet} onWalletCreate={this.handleWallet} onAlert={this.handleAlert}/>
                 </div>
             </div>
         );
@@ -64,13 +78,14 @@ class App extends Component {
         return (
             <div id="app">
                 <Menu wallet={wallet} onWalletCall={this.handleWallet}/>
-                <div className="container11">
+                <div>
+                    <AlertDismissable show={this.state.show_alert} alert={this.state.alert} hide={this.hideAlert}/>
                     <div className="col-md-7">
-                        <ListGames wallet={wallet}/>
+                        <ListGames wallet={wallet} onAlert={this.handleAlert}/>
                     </div>
 
                     <div className="col-md-5">
-                        <DisplayWallet mvp_game={this.state.mvp_game} wallet={wallet}/>
+                        <DisplayWallet mvp_game={this.state.mvp_game} wallet={wallet} onAlert={this.handleAlert}/>
                     </div>
                 </div>
                 <footer className="footer">
