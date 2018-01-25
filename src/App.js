@@ -6,6 +6,7 @@ import ImportWallet from './components/wallet/ImportWallet';
 import CreateWallet from './components/wallet/CreateWallet';
 import ConnectWallet from './components/wallet/ConnectWallet';
 import LoadWallet from './components/wallet/LoadWallet';
+import ListGames from './components/game/ListGames';
 
 const izx = require('izx-drive');
 
@@ -54,10 +55,15 @@ class App extends Component {
         return (
             <div id="app">
                 <Menu wallet={wallet} onWalletCall={this.handleWallet}/>
-                <div className="container">
-                    <DisplayWallet mvp_game={this.state.mvp_game} wallet={wallet}/>
-                </div>
+                <div className="container11">
+                    <div className="col-md-7">
+                        <ListGames wallet={wallet}/>
+                    </div>
 
+                    <div className="col-md-5">
+                        <DisplayWallet mvp_game={this.state.mvp_game} wallet={wallet}/>
+                    </div>
+                </div>
                 <footer className="footer">
                     <LogTable eventList={this.state.events}/>
                 </footer>

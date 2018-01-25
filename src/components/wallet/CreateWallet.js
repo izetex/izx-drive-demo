@@ -15,6 +15,7 @@ class CreateWallet extends Component {
             this.props.onWalletCreate(wallet);
         }catch(err){
             this.setState({error: "Error creating wallet, "+err});
+            console.log(err.stack);
         }
         event.preventDefault();
     }

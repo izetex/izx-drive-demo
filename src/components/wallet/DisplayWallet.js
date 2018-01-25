@@ -43,7 +43,9 @@ class DisplayWallet extends Component {
                 </div>
                 <div className="panel-body">
                     <p className="hidden-xs">
-                        Address: <strong>{wallet.address}</strong>&nbsp;&nbsp;
+                        Address: <strong>{wallet.address}</strong>
+                    </p>
+                    <p>
                         <a href={'http://ropsten.etherscan.io/address/'+wallet.address} target="_blank" className={style.smallLink}>
                             <span className="glyphicon glyphicon-share"></span>Ropsten</a>&nbsp;&nbsp;
                         <a href={'http://etherscan.io/address/'+wallet.address} target="_blank" className={style.smallLink}>
