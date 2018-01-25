@@ -40,9 +40,6 @@ class TransferOldTokens extends Component {
     }
 
     render() {
-
-        if(this.props.wallet)
-
         return this.state.opened ? (
             <div className="transfer">
                     <form className="form-inline" onSubmit={this.handleSubmit}>

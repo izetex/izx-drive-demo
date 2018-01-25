@@ -34,6 +34,15 @@ class App extends Component {
 
     handleWallet (wallet){
         this.setState({wallet: wallet});
+        var self = this;
+        wallet.tokens().concat(wallet.games()).map(function(e){
+            new izx.Logger(e).subscribe(function(record) {
+                var events = self.state.events;
+                events.unshift({id: events.length+1, content: record});
+                self.setState({events: events});
+            });
+        });
+
     }
 
     import_wallet (){

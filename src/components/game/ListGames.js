@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import TokenGame from './TokenGame';
+import TokenControl from './TokenControl';
 
 const games = {
     'Token Game': TokenGame
@@ -29,10 +30,7 @@ class ListGames extends Component {
                         <h3 className="panel-title">{game.name}</h3>
                     </div>
                     <div className="panel-body">
-                        <p className="hidden-xs">
-                            Address: <strong>{game.address}</strong>&nbsp;&nbsp;
-                            Token: <strong>{game.token.name}</strong>
-                        </p>
+                        <TokenControl game={game}/>
                         <RenderGame game={game}/>
                     </div>
                 </div>

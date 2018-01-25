@@ -1,0 +1,17 @@
+.approve {
+    margin: 20px;
+}
+
+.approve input {
+    margin-right: 3px;
+    min-width: 100px;
+    text-align: right;
+}
+
+.approve .token-name {
+    margin-right: 20px;
+}
+
+.approve a {
+    cursor: pointer;
+}
