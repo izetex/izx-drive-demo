@@ -34,6 +34,7 @@ class Menu extends Component {
                 }catch(e){}
                 this.props.onWalletCall(wallet);
                 break;
+            default:
         }
     }
 

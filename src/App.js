@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Menu from './components/common/Menu';
+import TransactionConfirmModalDialog from './components/common/TransactionConfirmModalDialog';
 import LogTable from './components/common/LogTable';
 import DisplayWallet from './components/wallet/DisplayWallet';
 import ImportWallet from './components/wallet/ImportWallet';
@@ -22,14 +23,15 @@ class App extends Component {
         var mvp_game = izx.IzxMvpGame;
 
         [wallet, mvp_game].map(function(e){
-            new izx.Logger(e).subscribe(function(record) {
+            return new izx.Logger(e).subscribe(function(record) {
                 var events = self.state.events;
                 events.unshift({id: events.length+1, content: record});
                 self.setState({events: events});
             });
         });
 
-        this.state = { wallet: wallet, mvp_game: mvp_game, events: [], show_alert: false };
+        this.state = { wallet: wallet, mvp_game: mvp_game, events: [],
+            show_alert: false, modalIsOpen: false, confirm_callback: null,  tx_params: null};
         this.handleWallet = this.handleWallet.bind(this);
         this.handleAlert = this.handleAlert.bind(this);
         this.hideAlert = this.hideAlert.bind(this);
@@ -40,12 +42,18 @@ class App extends Component {
         var self = this;
         if(wallet.connection){
             wallet.tokens().concat(wallet.games()).map(function(e){
-                new izx.Logger(e).subscribe(function(record) {
+                return new izx.Logger(e).subscribe(function(record) {
                     var events = self.state.events;
                     events.unshift({id: events.length+1, content: record});
                     self.setState({events: events});
                 });
             });
+
+            wallet.set_approval_callback( function(txParams, cb) {
+                self.setState({ modalIsOpen: true, confirm_callback: cb, tx_params:  txParams});
+            });
+
+
         }
     }
 
@@ -57,12 +65,16 @@ class App extends Component {
         this.setState({ show_alert: false });
     }
 
+    handleCloseConfirm(){
+        this.setState({modalIsOpen: false});
+    }
+
+
     import_wallet (){
         var wallet = this.state.wallet;
         return (
             <div id="app">
                 <Menu wallet={wallet} onWalletCall={this.handleWallet}/>
-
                 <div className="col-sm-8 col-sm-offset-2">
                     <AlertDismissable show={this.state.show_alert} alert={this.state.alert} hide={this.hideAlert}/>
                     <LoadWallet wallet={wallet} onWalletLoad={this.handleWallet} onAlert={this.handleAlert}/>
@@ -91,6 +103,11 @@ class App extends Component {
                 <footer className="footer">
                     <LogTable eventList={this.state.events}/>
                 </footer>
+                <TransactionConfirmModalDialog isOpen={this.state.modalIsOpen}
+                                               confirmCallback={this.state.confirm_callback}
+                                               handleCloseConfirm={this.handleCloseConfirm.bind(this)}
+                                               txParams={this.state.tx_params}
+                />
             </div>
         );
     }

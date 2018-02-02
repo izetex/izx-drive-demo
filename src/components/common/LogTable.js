@@ -12,7 +12,7 @@ function EventList(props) {
             <td>{new Date(event.content.start_at).toLocaleTimeString()}</td>
             <td>{event.content.duration} ms {event.content.async ? 'async' : ''}</td>
             <td>{event.content.object}.{event.content.method}</td>
-            <td>{event.content.args.length==0 ? '' : util.inspect(event.content.args)}</td>
+            <td>{event.content.args.length===0 ? '' : util.inspect(event.content.args)}</td>
             <td>{util.inspect(event.content.exception || event.content.result)}</td>
         </tr>
     );
